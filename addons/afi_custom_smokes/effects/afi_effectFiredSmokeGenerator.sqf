@@ -32,7 +32,7 @@ if (!isEngineOn _unit) then {
 // Helper function for effects
 _effects = {
 
-	private ["_pointPos", "_pointDir", "_unit", "_lifetime", "_count", "_exhaustPos", "_exhaustDir", "_fx1", "_vector"];
+	private ["_pointPos", "_pointDir", "_unit", "_lifetime", "_count", "_exhaustPos", "_exhaustDir", "_fx1", "_fx2", "_fx3", "_fx4", "_vector"];
 
 	_pointPos = _this select 0;
 	_pointDir = _this select 1;
@@ -48,47 +48,138 @@ _effects = {
 	_vectorFlat = [_vector select 0, _vector select 1, 0];
 
 	_fx1 = "#particlesource" createVehicleLocal _exhaustPos;
-	_fx1 setParticleClass "RHS_SmokeGenerator";
+	_fx1 setDropInterval 0.025;
+	_fx1 setParticleRandom [
+		1,																// lifetime
+		[0,0,0], 														// Position
+		[1,1,1], 														// velocity
+		1, 																// Rotation velocity
+		0, 																// Size
+		[0, 0, 0, 0], 													// Color
+		0.15, 															// Random dir period
+		0.10															// Random dir intensity
+	];
+	_fx1 setParticleParams [
+		["\A3\data_f\ParticleEffects\Universal\smoke.p3d",1,0,1], 		//object
+		"",																//Animation name
+		"Billboard",													//Type
+		1,																//Timer periods
+		4, 																//Life time
+		_pointPos,														//Position
+		_vector vectorMultiply (random 2 + 4),							//move velocity
+		1, 																//rotation velocity
+		1.277,															//weight
+		0.950 + random 0.025,											//volume
+		0.075,															//rubbing
+		[
+			0.4,
+			3,
+			4
+		],																//size
+		[
+			[ 0.8, 0.8, 0.8, 0.15 ],
+			[ 0.8, 0.8, 0.8, 0.10 ],
+			[ 0.8, 0.8, 0.8, 0.05 ],
+			[ 0.8, 0.8, 0.8, 0.01 ],
+			[ 0.8, 0.8, 0.8, 0.0 ]
+		], 																//color
+		[1],															//Animation Phase
+		0,																//Random dir
+		0, 																//Random dir intensity
+		"", 															//On timer
+		"", 															// before destroy
+		_unit
+	];
+
+	_fx2 = "#particlesource" createVehicleLocal _exhaustPos;
+	_fx2 setDropInterval 0.025;
+	_fx2 setParticleRandom [
+		1,																// lifetime
+		[0,0,0], 														// Position
+		[1,1,1], 														// velocity
+		1, 																// Rotation velocity
+		0, 																// Size
+		[0, 0, 0, 0], 													// Color
+		0.15, 															// Random dir period
+		0.10															// Random dir intensity
+	];
+	_fx2 setParticleParams [
+		["\A3\data_f\ParticleEffects\Universal\smoke.p3d",1,0,1], 		//object
+		"",																//Animation name
+		"Billboard",													//Type
+		1,																//Timer periods
+		4, 																//Life time
+		_pointPos,														//Position
+		_vectorFlat vectorMultiply (random 2 + 4),							//move velocity
+		1, 																//rotation velocity
+		1.277,															//weight
+		0.990 + random 0.045,											//volume
+		0.075,															//rubbing
+		[
+			0.4,
+			3,
+			4
+		],																//size
+		[
+			[ 0.8, 0.8, 0.8, 0.15 ],
+			[ 0.8, 0.8, 0.8, 0.10 ],
+			[ 0.8, 0.8, 0.8, 0.05 ],
+			[ 0.8, 0.8, 0.8, 0.01 ],
+			[ 0.8, 0.8, 0.8, 0.0 ]
+		], 																//color
+		[1],															//Animation Phase
+		0,																//Random dir
+		0, 																//Random dir intensity
+		"", 															//On timer
+		"", 															// before destroy
+		_unit
+	];
+
+	_fx3 = "#particlesource" createVehicleLocal _exhaustPos;
 	switch particlesQuality do {
 		case 2: {
-			_fx1 setDropInterval (0.01 * _count);
+			_fx3 setDropInterval (0.050 * _count);
 		};
 		case 1: {
-			_fx1 setDropInterval (0.025 * _count);
+			_fx3 setDropInterval (0.075 * _count);
 		};
 		default {
-			_fx1 setDropInterval (0.1 * _count);
+			_fx3 setDropInterval (0.100 * _count);
 		};
 	};
-	_fx1 setParticleRandom [
-		15,															// lifetime
+	_fx3 setParticleRandom [
+		1,															// lifetime
 		[0,0,0], 														// Position
 		[1.5,1.5,0], 													// velocity
 		1, 																// Rotation velocity
-		0.2, 															// Size
+		0.4, 															// Size
 		[0, 0, 0, 0], 													// Color
-		0.25, 															// Random dir period
-		0.05															// Random dir intensity
+		0.15, 															// Random dir period
+		0.025															// Random dir intensity
 	];
-	_fx1 setParticleParams [
+	_fx3 setParticleParams [
 		["\A3\data_f\cl_basic.p3d",1,0,1], 		//object
 		"",																//Animation name
 		"Billboard",													//Type
 		1,																//Timer periods
-		45, 															//Life time
+		6, 															//Life time
 		_pointPos,														//Position
-		_vectorFlat vectorMultiply (random 2 + 1),						//move velocity
+		_vectorFlat vectorMultiply (random 3 + 2),							//move velocity
 		1, 																//rotation velocity
-		2.229,															//weight
-		1.75,											//volume
-		0.04,															//rubbing
-		[0.5, 6, 8],															//size
+		1.277,															//weight
+		0.985 + random 0.035,											//volume
+		0.075,															//rubbing
 		[
-			[ 1.0, 1.0, 1.0, 0.2 ],
-			[ 1.0, 1.0, 1.0, 0.6 ],
-			[ 1.0, 1.0, 1.0, 0.8 ],
-			[ 1.0, 1.0, 1.0, 0.6 ],
-			[ 1.0, 1.0, 1.0, 0.5 ],
+			1,
+			3,
+			4
+		],																//size
+		[
+			[ 1.0, 1.0, 1.0, 0.0 ],
+			[ 1.0, 1.0, 1.0, 0.10 ],
+			[ 1.0, 1.0, 1.0, 0.15 ],
+			[ 1.0, 1.0, 1.0, 0.10 ],
+			[ 1.0, 1.0, 1.0, 0.05 ],
 			[ 1.0, 1.0, 1.0, 0.0 ]
 		], 																//color
 		[1],															//Animation Phase
@@ -99,11 +190,69 @@ _effects = {
 		_unit,
 		0, 																//angle
 		true, 															//on surface
-		0.5 															//bounce on surface
+		0.25 															//bounce on surface
 	];
 
-	[_lifetime, [_fx1]] spawn {
-		uiSleep (_this select 0);
+	_fx4 = "#particlesource" createVehicleLocal _exhaustPos;
+	_fx4 setParticleClass "RHS_SmokeGenerator";
+	switch particlesQuality do {
+		case 2: {
+			_fx4 setDropInterval (0.035 * _count);
+		};
+		case 1: {
+			_fx4 setDropInterval (0.045 * _count);
+		};
+		default {
+			_fx4 setDropInterval (0.100 * _count);
+		};
+	};
+	_fx4 setParticleRandom [
+		0.5,															// lifetime
+		[0,0,0], 														// Position
+		[1.5,1.5,0], 													// velocity
+		1, 																// Rotation velocity
+		0.6, 															// Size
+		[0, 0, 0, 0], 													// Color
+		0.5, 															// Random dir period
+		0.05															// Random dir intensity
+	];
+	_fx4 setParticleParams [
+		["\A3\data_f\cl_basic.p3d",1,0,1], 		//object
+		"",																//Animation name
+		"Billboard",													//Type
+		1,																//Timer periods
+		60, 															//Life time
+		_pointPos,														//Position
+		_vectorFlat vectorMultiply (random 3 + 2),							//move velocity
+		1, 																//rotation velocity
+		1.299,															//weight
+		0.985 + random 0.045,											//volume
+		0.05,															//rubbing
+		[
+			0.2,
+			6
+		],																//size
+		[
+			[ 1.0, 1.0, 1.0, 0.01 ],
+			[ 1.0, 1.0, 1.0, 0.25 ],
+			[ 1.0, 1.0, 1.0, 0.50 ],
+			[ 1.0, 1.0, 1.0, 1 ],
+			[ 1.0, 1.0, 1.0, 0.75 ],
+			[ 1.0, 1.0, 1.0, 0.0 ]
+		], 																//color
+		[1],															//Animation Phase
+		0,																//Random dir
+		0, 																//Random dir intensity
+		"", 															//On timer
+		"", 															// before destroy
+		_unit,
+		0, 																//angle
+		true, 															//on surface
+		0.25 															//bounce on surface
+	];
+
+	[_lifetime, [_fx1, _fx2, _fx3, _fx4]] spawn {
+		sleep (_this select 0);
 		{ deleteVehicle _x } forEach (_this select 1);
 	};
 
