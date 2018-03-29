@@ -23,23 +23,30 @@ class CfgAmmo {
 	//USF
 	//GL smokes
 	class rhs_40mm_smoke_red: SmokeShellRed {
-		smokeColor[] = {0.9,0.1,0.1,0.3};
+		smokeColor[] = {0.9,0.1,0.1,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
+
 	};
 	class rhs_40mm_smoke_green: SmokeShellGreen	{
-		smokeColor[] = {0.2,0.9,0.2,0.3};
+		smokeColor[] = {0.2,0.9,0.2,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
 	};
 	//Throwable
 	class rhs_ammo_m18_green: SmokeShell {
-		smokeColor[] = {0.2,0.9,0.2,0.3};
+		smokeColor[] = {0.2,0.9,0.2,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
 	};
 	class rhs_ammo_m18_purple: rhs_ammo_m18_green {
-		smokeColor[] = {0.4341,0.1388,0.4144,0.3};
+		smokeColor[] = {0.4341,0.1388,0.4144,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
 	};
 	class rhs_ammo_m18_red: rhs_ammo_m18_green {
-		smokeColor[] = {0.9,0.1,0.1,0.3};
+		smokeColor[] = {0.9,0.1,0.1,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
 	};
 	class rhs_ammo_m18_yellow: rhs_ammo_m18_green {
-		smokeColor[] = {0.9883,0.8606,0.0719,0.3};
+		smokeColor[] = {0.9883,0.8606,0.0719,0.1};
+		effectsSmoke = "AFI_SmokeBaseColor";
 	};
 
 	//AFRF
@@ -63,6 +70,9 @@ class CfgCloudlets {
 	class ACE_SmokeBaseLarge: Default {
 		lifeTime = 45;
 		lifeTimeVar = 15;
+	};
+	class AFI_SmokeBaseColor: ACE_SmokeBaseLarge {
+		color[] = {{ 0.5,0.5,0.5,0.8},{ 0.5,0.5,0.5,0.4},{ 0.5,0.5,0.5,0.3},{ 0.5,0.5,0.5,0.2},{ 0.5,0.5,0.5,0.1 },{ 0.5,0.5,0.5,0 }};
 	};
 };
 
